@@ -37,7 +37,7 @@ height:100%;
 width:100%;
 }
 
-input{
+input, select{
 padding:10px;
 margin:5px;
 }
@@ -67,4 +67,9 @@ margin-top:10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+}
+
+.vs{
+font-size:20px;
+font-weight:bold;
 }

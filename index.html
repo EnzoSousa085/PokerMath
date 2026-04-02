@@ -13,7 +13,8 @@
 
 <h1>PokéMath</h1>
 
-<div class="player-setup">
+<div class="setup">
+
 <input type="text" id="playerName" placeholder="Seu nome">
 
 <select id="level">
@@ -22,7 +23,23 @@
 <option value="hard">Difícil</option>
 </select>
 
+<h3>Escolha seu Pokémon</h3>
+
+<select id="playerPokemon">
+<option value="25">Pikachu</option>
+<option value="6">Charizard</option>
+<option value="9">Blastoise</option>
+<option value="3">Venusaur</option>
+<option value="94">Gengar</option>
+<option value="149">Dragonite</option>
+<option value="150">Mewtwo</option>
+<option value="65">Alakazam</option>
+</select>
+
+<br>
+
 <button onclick="startGame()">Começar</button>
+
 </div>
 
 <div class="timer">
@@ -37,10 +54,11 @@ Tempo: <span id="time">03:00</span>
 <div class="hp"><div id="pokemonHP"></div></div>
 </div>
 
-<div>VS</div>
+<div class="vs">VS</div>
 
 <div>
 <h3>Você</h3>
+<img id="playerSprite">
 <div class="hp"><div id="playerHP"></div></div>
 </div>
 
