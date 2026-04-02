@@ -1,3 +1,7 @@
+const RESET_RANKING = true
+if(RESET_RANKING){
+localStorage.removeItem("ranking")
+}
 let playerHP = 100
 let pokemonHP = 100
 let score = 0
