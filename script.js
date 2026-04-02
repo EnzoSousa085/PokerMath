@@ -4,7 +4,6 @@ let score = 0
 let playerName = "Jogador"
 let level = "easy"
 
-let usedQuestions = []
 let correctAnswer = 0
 
 let timeLeft = 180
@@ -22,37 +21,197 @@ const pokemons = [
 {nome:"Alakazam", id:65}
 ]
 
-const questions = {
+function rand(min,max){
+return Math.floor(Math.random()*(max-min+1))+min
+}
 
-easy:[
-{q:"12 + 8", a:20},
-{q:"15 × 3", a:45},
-{q:"100 ÷ 5", a:20},
-{q:"9²", a:81},
-{q:"√64", a:8},
-{q:"25 + 75", a:100},
-{q:"6 × 7", a:42},
-{q:"14 + 19", a:33}
-],
+/* ======================
+GERADOR DE QUESTÕES
+====================== */
 
-medium:[
-{q:"12² + 5³", a:269},
-{q:"15 × (8 + 3)", a:165},
-{q:"√144 + 9", a:21},
-{q:"(20 × 6) - 4", a:116},
-{q:"17²", a:289},
-{q:"(8×9)+(7×6)", a:114}
-],
+function generateEasy(){
 
-hard:[
-{q:"25² - 5²", a:600},
-{q:"(15×15)-100", a:125},
-{q:"(6×6×6)", a:216},
-{q:"(50×6)+144", a:444},
-{q:"(18²)+75", a:399}
-]
+let a = rand(10,99)
+let b = rand(10,99)
+
+let type = rand(1,4)
+
+if(type===1){
+return {q:`${a} + ${b}`, a:a+b}
+}
+
+if(type===2){
+return {q:`${a} - ${b}`, a:a-b}
+}
+
+if(type===3){
+return {q:`${a} × ${b}`, a:a*b}
+}
+
+if(type===4){
+let n = rand(2,15)
+return {q:`${n}²`, a:n*n}
+}
 
 }
+
+function generateMedium(){
+
+let type = rand(1,5)
+
+if(type===1){
+
+let a = rand(2,20)
+let b = rand(2,20)
+
+return {
+q:`${a}x + ${b} = ${a*5+b}`,
+a:5
+}
+
+}
+
+if(type===2){
+
+let n = rand(2,20)
+
+return {
+q:`√${n*n}`,
+a:n
+}
+
+}
+
+if(type===3){
+
+let a = rand(2,12)
+let b = rand(2,12)
+
+return {
+q:`(${a}² + ${b}²)`,
+a:(a*a)+(b*b)
+}
+
+}
+
+if(type===4){
+
+let a = rand(2,15)
+
+return {
+q:`log10(${10**a})`,
+a:a
+}
+
+}
+
+if(type===5){
+
+let a = rand(2,10)
+let b = rand(2,10)
+
+return {
+q:`${a}³ + ${b}²`,
+a:(a*a*a)+(b*b)
+}
+
+}
+
+}
+
+function generateHard(){
+
+let type = rand(1,6)
+
+if(type===1){
+
+let n = rand(2,10)
+
+return {
+q:`derivada de ${n}x`,
+a:n
+}
+
+}
+
+if(type===2){
+
+let n = rand(2,8)
+
+return {
+q:`derivada de x^${n} em x=1`,
+a:n
+}
+
+}
+
+if(type===3){
+
+let a = rand(1,10)
+let b = rand(1,10)
+
+return {
+q:`∫ ${a} dx de 0 a ${b}`,
+a:a*b
+}
+
+}
+
+if(type===4){
+
+let n = rand(2,6)
+
+return {
+q:`∫ x dx de 0 a ${n}`,
+a:(n*n)/2
+}
+
+}
+
+if(type===5){
+
+let n = rand(2,10)
+
+return {
+q:`lim x→∞ ${n}/x`,
+a:0
+}
+
+}
+
+if(type===6){
+
+let n = rand(2,8)
+
+return {
+q:`derivada de ${n}x² em x=1`,
+a:2*n
+}
+
+}
+
+}
+
+/* ======================
+QUESTÃO NOVA
+====================== */
+
+function newQuestion(){
+
+let q
+
+if(level==="easy") q = generateEasy()
+if(level==="medium") q = generateMedium()
+if(level==="hard") q = generateHard()
+
+document.getElementById("question").innerHTML = q.q
+correctAnswer = q.a
+
+}
+
+/* ======================
+RESTO DO JOGO
+====================== */
 
 function startGame(){
 
@@ -118,33 +277,11 @@ document.getElementById("playerSprite").src =
 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerPokemon}.png`
 }
 
-function newQuestion(){
-
-let list = questions[level]
-
-if(usedQuestions.length === list.length){
-usedQuestions = []
-}
-
-let index
-
-do{
-index = Math.floor(Math.random()*list.length)
-}while(usedQuestions.includes(index))
-
-usedQuestions.push(index)
-
-let q = list[index]
-
-document.getElementById("question").innerHTML = q.q
-correctAnswer = q.a
-}
-
 function attack(){
 
 if(!gameRunning) return
 
-let user = parseInt(document.getElementById("answer").value)
+let user = parseFloat(document.getElementById("answer").value)
 
 if(user === correctAnswer){
 
@@ -222,7 +359,6 @@ function resetGame(){
 playerHP = 100
 pokemonHP = 100
 score = 0
-usedQuestions = []
 
 randomPokemon()
 newQuestion()
