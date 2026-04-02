@@ -1,4 +1,4 @@
-const RESET_RANKING = true
+const RESET_RANKING = false
 if(RESET_RANKING){
 localStorage.removeItem("ranking")
 }
