@@ -5,6 +5,7 @@ let playerName = "Jogador"
 let level = "easy"
 
 let correctAnswer = 0
+let questionPool = []
 
 let timeLeft = 180
 let timer
@@ -25,9 +26,9 @@ function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
 }
 
-/* ======================
+/* =========================
 GERADORES LATEX
-====================== */
+========================= */
 
 function generateEasy(){
 
@@ -111,17 +112,44 @@ return {q:`\\frac{d}{dx}(${n}x^2)\\Big|_{x=1}`,a:2*n}
 
 }
 
-/* ======================
-QUESTÃO
-====================== */
+/* =========================
+GERAR BANCO GRANDE
+========================= */
+
+function generatePool(){
+
+questionPool = []
+
+for(let i=0;i<500;i++){
+
+if(level==="easy") questionPool.push(generateEasy())
+if(level==="medium") questionPool.push(generateMedium())
+if(level==="hard") questionPool.push(generateHard())
+
+}
+
+shuffle(questionPool)
+
+}
+
+function shuffle(array){
+for(let i=array.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1))
+[array[i],array[j]]=[array[j],array[i]]
+}
+}
+
+/* =========================
+QUESTÃO NOVA
+========================= */
 
 function newQuestion(){
 
-let q
+if(questionPool.length===0){
+generatePool()
+}
 
-if(level==="easy") q = generateEasy()
-if(level==="medium") q = generateMedium()
-if(level==="hard") q = generateHard()
+let q = questionPool.pop()
 
 document.getElementById("question").innerHTML = `\\(${q.q}\\)`
 correctAnswer = q.a
@@ -130,9 +158,9 @@ MathJax.typeset()
 
 }
 
-/* ======================
+/* =========================
 GAME
-====================== */
+========================= */
 
 function startGame(){
 
@@ -285,6 +313,7 @@ function resetGame(){
 playerHP=100
 pokemonHP=100
 score=0
+questionPool=[]
 
 randomPokemon()
 newQuestion()
