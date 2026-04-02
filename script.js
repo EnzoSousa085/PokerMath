@@ -1,9 +1,5 @@
-/* RESETAR RANKING */
+/* CONFIG */
 const RESET_RANKING = true
-
-if(RESET_RANKING){
-localStorage.removeItem("ranking")
-}
 
 let playerHP = 100
 let pokemonHP = 100
@@ -31,6 +27,13 @@ const pokemons = [
 
 function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
+}
+
+/* RESET SE ATIVADO */
+function resetRankingIfNeeded(){
+if(RESET_RANKING){
+localStorage.removeItem("ranking")
+}
 }
 
 /* GERADORES */
@@ -117,7 +120,7 @@ return {q:`\\frac{d}{dx}(${n}x^2)\\Big|_{x=1}`,a:2*n}
 
 }
 
-/* BANCO GRANDE */
+/* BANCO */
 
 function generatePool(){
 
@@ -183,6 +186,8 @@ timeLeft = 180
 
 timer = setInterval(()=>{
 
+if(!gameRunning) return
+
 timeLeft--
 
 let min = Math.floor(timeLeft/60)
@@ -207,7 +212,6 @@ document.getElementById("answer").disabled=true
 
 saveScore()
 alert("Tempo acabou! Pontuação: "+score)
-resetGame()
 
 }
 
@@ -230,6 +234,8 @@ function attack(){
 if(!gameRunning) return
 
 let user=parseFloat(document.getElementById("answer").value)
+
+if(isNaN(user)) return
 
 if(user===correctAnswer){
 
@@ -320,5 +326,9 @@ updateHP()
 
 }
 
+/* INIT */
+window.onload = () => {
+resetRankingIfNeeded()
 document.getElementById("answer").disabled=true
 loadRanking()
+}
