@@ -25,9 +25,9 @@ function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
 }
 
-/* ======================
-GERADOR DE QUESTÕES
-====================== */
+/* =========================
+GERADORES DE QUESTÕES BONITAS
+========================= */
 
 function generateEasy(){
 
@@ -50,7 +50,7 @@ return {q:`${a} × ${b}`, a:a*b}
 
 if(type===4){
 let n = rand(2,15)
-return {q:`${n}²`, a:n*n}
+return {q:`${n}<sup>2</sup>`, a:n*n}
 }
 
 }
@@ -61,18 +61,6 @@ let type = rand(1,5)
 
 if(type===1){
 
-let a = rand(2,20)
-let b = rand(2,20)
-
-return {
-q:`${a}x + ${b} = ${a*5+b}`,
-a:5
-}
-
-}
-
-if(type===2){
-
 let n = rand(2,20)
 
 return {
@@ -82,37 +70,48 @@ a:n
 
 }
 
-if(type===3){
+if(type===2){
 
 let a = rand(2,12)
 let b = rand(2,12)
 
 return {
-q:`(${a}² + ${b}²)`,
+q:`${a}<sup>2</sup> + ${b}<sup>2</sup>`,
 a:(a*a)+(b*b)
+}
+
+}
+
+if(type===3){
+
+let a = rand(2,10)
+
+return {
+q:`log<sub>10</sub>(10<sup>${a}</sup>)`,
+a:a
 }
 
 }
 
 if(type===4){
 
-let a = rand(2,15)
+let a = rand(2,10)
+let b = rand(2,10)
 
 return {
-q:`log10(${10**a})`,
-a:a
+q:`${a}<sup>3</sup> + ${b}<sup>2</sup>`,
+a:(a*a*a)+(b*b)
 }
 
 }
 
 if(type===5){
 
-let a = rand(2,10)
-let b = rand(2,10)
+let a = rand(2,20)
 
 return {
-q:`${a}³ + ${b}²`,
-a:(a*a*a)+(b*b)
+q:`√(${a*a} + 0)`,
+a:a
 }
 
 }
@@ -128,7 +127,7 @@ if(type===1){
 let n = rand(2,10)
 
 return {
-q:`derivada de ${n}x`,
+q:`d/dx (${n}x)`,
 a:n
 }
 
@@ -136,10 +135,10 @@ a:n
 
 if(type===2){
 
-let n = rand(2,8)
+let n = rand(2,6)
 
 return {
-q:`derivada de x^${n} em x=1`,
+q:`d/dx (x<sup>${n}</sup>) em x=1`,
 a:n
 }
 
@@ -151,7 +150,7 @@ let a = rand(1,10)
 let b = rand(1,10)
 
 return {
-q:`∫ ${a} dx de 0 a ${b}`,
+q:`∫<sub>0</sub><sup>${b}</sup> ${a} dx`,
 a:a*b
 }
 
@@ -162,7 +161,7 @@ if(type===4){
 let n = rand(2,6)
 
 return {
-q:`∫ x dx de 0 a ${n}`,
+q:`∫<sub>0</sub><sup>${n}</sup> x dx`,
 a:(n*n)/2
 }
 
@@ -184,7 +183,7 @@ if(type===6){
 let n = rand(2,8)
 
 return {
-q:`derivada de ${n}x² em x=1`,
+q:`d/dx (${n}x<sup>2</sup>) em x=1`,
 a:2*n
 }
 
@@ -210,7 +209,7 @@ correctAnswer = q.a
 }
 
 /* ======================
-RESTO DO JOGO
+JOGO
 ====================== */
 
 function startGame(){
