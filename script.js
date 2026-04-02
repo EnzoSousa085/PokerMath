@@ -1,3 +1,10 @@
+/* RESETAR RANKING */
+const RESET_RANKING = true
+
+if(RESET_RANKING){
+localStorage.removeItem("ranking")
+}
+
 let playerHP = 100
 let pokemonHP = 100
 let score = 0
@@ -26,9 +33,7 @@ function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
 }
 
-/* =========================
-GERADORES LATEX
-========================= */
+/* GERADORES */
 
 function generateEasy(){
 
@@ -112,9 +117,7 @@ return {q:`\\frac{d}{dx}(${n}x^2)\\Big|_{x=1}`,a:2*n}
 
 }
 
-/* =========================
-GERAR BANCO GRANDE
-========================= */
+/* BANCO GRANDE */
 
 function generatePool(){
 
@@ -139,9 +142,7 @@ let j=Math.floor(Math.random()*(i+1))
 }
 }
 
-/* =========================
-QUESTÃO NOVA
-========================= */
+/* QUESTÃO */
 
 function newQuestion(){
 
@@ -158,9 +159,7 @@ MathJax.typeset()
 
 }
 
-/* =========================
-GAME
-========================= */
+/* GAME */
 
 function startGame(){
 
