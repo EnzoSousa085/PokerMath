@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokéMath</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="pokedex">
+
+<h1>PokéMath</h1>
+
+<div class="battle">
+
+<div class="pokemon-area">
+<h2 id="pokemonName">Pokemon</h2>
+<img id="pokemonSprite">
+<div class="hp-bar">
+<div id="pokemonHP"></div>
+</div>
+</div>
+
+<div class="vs">VS</div>
+
+<div class="player-area">
+<h2>Você</h2>
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png">
+<div class="hp-bar">
+<div id="playerHP"></div>
+</div>
+</div>
+
+</div>
+
+<div class="math-box">
+<h2 id="question">2 + 2</h2>
+
+<input type="number" id="answer">
+<button onclick="attack()">Atacar</button>
+</div>
+
+<div class="log" id="log"></div>
+
+<div class="score">
+Pontuação: <span id="score">0</span>
+</div>
+
+<button onclick="resetGame()" class="reset">
+Reiniciar
+</button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
