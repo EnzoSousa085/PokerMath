@@ -25,9 +25,9 @@ function rand(min,max){
 return Math.floor(Math.random()*(max-min+1))+min
 }
 
-/* =========================
-GERADORES DE QUESTÕES BONITAS
-========================= */
+/* ======================
+GERADORES LATEX
+====================== */
 
 function generateEasy(){
 
@@ -36,22 +36,12 @@ let b = rand(10,99)
 
 let type = rand(1,4)
 
-if(type===1){
-return {q:`${a} + ${b}`, a:a+b}
-}
+if(type===1) return {q:`${a}+${b}`,a:a+b}
+if(type===2) return {q:`${a}-${b}`,a:a-b}
+if(type===3) return {q:`${a}\\times${b}`,a:a*b}
 
-if(type===2){
-return {q:`${a} - ${b}`, a:a-b}
-}
-
-if(type===3){
-return {q:`${a} × ${b}`, a:a*b}
-}
-
-if(type===4){
 let n = rand(2,15)
-return {q:`${n}<sup>2</sup>`, a:n*n}
-}
+return {q:`${n}^2`,a:n*n}
 
 }
 
@@ -60,61 +50,29 @@ function generateMedium(){
 let type = rand(1,5)
 
 if(type===1){
-
 let n = rand(2,20)
-
-return {
-q:`√${n*n}`,
-a:n
-}
-
+return {q:`\\sqrt{${n*n}}`,a:n}
 }
 
 if(type===2){
-
 let a = rand(2,12)
 let b = rand(2,12)
-
-return {
-q:`${a}<sup>2</sup> + ${b}<sup>2</sup>`,
-a:(a*a)+(b*b)
-}
-
+return {q:`${a}^2+${b}^2`,a:a*a+b*b}
 }
 
 if(type===3){
-
-let a = rand(2,10)
-
-return {
-q:`log<sub>10</sub>(10<sup>${a}</sup>)`,
-a:a
-}
-
+let a = rand(2,5)
+return {q:`\\log_{10}(10^{${a}})`,a:a}
 }
 
 if(type===4){
-
 let a = rand(2,10)
 let b = rand(2,10)
-
-return {
-q:`${a}<sup>3</sup> + ${b}<sup>2</sup>`,
-a:(a*a*a)+(b*b)
+return {q:`${a}^3+${b}^2`,a:a*a*a+b*b}
 }
 
-}
-
-if(type===5){
-
-let a = rand(2,20)
-
-return {
-q:`√(${a*a} + 0)`,
-a:a
-}
-
-}
+let n = rand(2,10)
+return {q:`\\sqrt{${n*n}}`,a:n}
 
 }
 
@@ -123,76 +81,38 @@ function generateHard(){
 let type = rand(1,6)
 
 if(type===1){
-
 let n = rand(2,10)
-
-return {
-q:`d/dx (${n}x)`,
-a:n
-}
-
+return {q:`\\frac{d}{dx}(${n}x)`,a:n}
 }
 
 if(type===2){
-
 let n = rand(2,6)
-
-return {
-q:`d/dx (x<sup>${n}</sup>) em x=1`,
-a:n
-}
-
+return {q:`\\frac{d}{dx}(x^{${n}})\\Big|_{x=1}`,a:n}
 }
 
 if(type===3){
-
 let a = rand(1,10)
 let b = rand(1,10)
-
-return {
-q:`∫<sub>0</sub><sup>${b}</sup> ${a} dx`,
-a:a*b
-}
-
+return {q:`\\int_0^{${b}} ${a}\\,dx`,a:a*b}
 }
 
 if(type===4){
-
 let n = rand(2,6)
-
-return {
-q:`∫<sub>0</sub><sup>${n}</sup> x dx`,
-a:(n*n)/2
-}
-
+return {q:`\\int_0^{${n}} x\\,dx`,a:(n*n)/2}
 }
 
 if(type===5){
-
 let n = rand(2,10)
-
-return {
-q:`lim x→∞ ${n}/x`,
-a:0
+return {q:`\\lim_{x\\to\\infty}\\frac{${n}}{x}`,a:0}
 }
-
-}
-
-if(type===6){
 
 let n = rand(2,8)
-
-return {
-q:`d/dx (${n}x<sup>2</sup>) em x=1`,
-a:2*n
-}
-
-}
+return {q:`\\frac{d}{dx}(${n}x^2)\\Big|_{x=1}`,a:2*n}
 
 }
 
 /* ======================
-QUESTÃO NOVA
+QUESTÃO
 ====================== */
 
 function newQuestion(){
@@ -203,13 +123,15 @@ if(level==="easy") q = generateEasy()
 if(level==="medium") q = generateMedium()
 if(level==="hard") q = generateHard()
 
-document.getElementById("question").innerHTML = q.q
+document.getElementById("question").innerHTML = `\\(${q.q}\\)`
 correctAnswer = q.a
+
+MathJax.typeset()
 
 }
 
 /* ======================
-JOGO
+GAME
 ====================== */
 
 function startGame(){
@@ -230,7 +152,6 @@ document.getElementById("answer").disabled = false
 function startTimer(){
 
 clearInterval(timer)
-
 timeLeft = 180
 
 timer = setInterval(()=>{
@@ -243,7 +164,7 @@ let sec = timeLeft%60
 document.getElementById("time").innerHTML =
 `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`
 
-if(timeLeft <= 0){
+if(timeLeft<=0){
 clearInterval(timer)
 endGame()
 }
@@ -254,67 +175,72 @@ endGame()
 
 function endGame(){
 
-gameRunning = false
-document.getElementById("answer").disabled = true
+gameRunning=false
+document.getElementById("answer").disabled=true
 
 saveScore()
-alert("Tempo acabou! Pontuação: " + score)
+alert("Tempo acabou! Pontuação: "+score)
 resetGame()
 
 }
 
 function randomPokemon(){
 
-let enemy = pokemons[Math.floor(Math.random()*pokemons.length)]
+let enemy=pokemons[Math.floor(Math.random()*pokemons.length)]
 
-document.getElementById("pokemonName").innerHTML = enemy.nome
+document.getElementById("pokemonName").innerHTML=enemy.nome
 
-document.getElementById("pokemonSprite").src =
+document.getElementById("pokemonSprite").src=
 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${enemy.id}.png`
 
-document.getElementById("playerSprite").src =
+document.getElementById("playerSprite").src=
 `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerPokemon}.png`
+
 }
 
 function attack(){
 
 if(!gameRunning) return
 
-let user = parseFloat(document.getElementById("answer").value)
+let user=parseFloat(document.getElementById("answer").value)
 
-if(user === correctAnswer){
+if(user===correctAnswer){
 
-pokemonHP -= 25
-score += 10
-document.getElementById("log").innerHTML = "Correto ⚡"
+pokemonHP-=25
+score+=10
+document.getElementById("log").innerHTML="Correto ⚡"
 
 }else{
 
-playerHP -= 15
-document.getElementById("log").innerHTML = "Errado 💥"
+playerHP-=15
+document.getElementById("log").innerHTML="Errado 💥"
+
 }
 
 updateHP()
 document.getElementById("answer").value=""
 checkBattle()
 newQuestion()
+
 }
 
 function updateHP(){
-document.getElementById("pokemonHP").style.width = pokemonHP+"%"
-document.getElementById("playerHP").style.width = playerHP+"%"
-document.getElementById("score").innerHTML = score
+
+document.getElementById("pokemonHP").style.width=pokemonHP+"%"
+document.getElementById("playerHP").style.width=playerHP+"%"
+document.getElementById("score").innerHTML=score
+
 }
 
 function checkBattle(){
 
-if(pokemonHP <= 0){
-score += 50
-pokemonHP = 100
+if(pokemonHP<=0){
+score+=50
+pokemonHP=100
 randomPokemon()
 }
 
-if(playerHP <= 0){
+if(playerHP<=0){
 clearInterval(timer)
 endGame()
 }
@@ -323,47 +249,48 @@ endGame()
 
 function saveScore(){
 
-let ranking = JSON.parse(localStorage.getItem("ranking")) || []
+let ranking=JSON.parse(localStorage.getItem("ranking"))||[]
 
 ranking.push({
-name: playerName,
-score: score,
-level: level
+name:playerName,
+score:score,
+level:level
 })
 
-ranking.sort((a,b)=> b.score-a.score)
-ranking = ranking.slice(0,10)
+ranking.sort((a,b)=>b.score-a.score)
+ranking=ranking.slice(0,10)
 
-localStorage.setItem("ranking", JSON.stringify(ranking))
-
+localStorage.setItem("ranking",JSON.stringify(ranking))
 loadRanking()
+
 }
 
 function loadRanking(){
 
-let ranking = JSON.parse(localStorage.getItem("ranking")) || []
+let ranking=JSON.parse(localStorage.getItem("ranking"))||[]
 
-let list = document.getElementById("rankingList")
+let list=document.getElementById("rankingList")
 list.innerHTML=""
 
 ranking.forEach(p=>{
-let li = document.createElement("li")
-li.innerHTML = `${p.name} - ${p.score} (${p.level})`
+let li=document.createElement("li")
+li.innerHTML=`${p.name} - ${p.score} (${p.level})`
 list.appendChild(li)
 })
 
 }
 
 function resetGame(){
-playerHP = 100
-pokemonHP = 100
-score = 0
+
+playerHP=100
+pokemonHP=100
+score=0
 
 randomPokemon()
 newQuestion()
 updateHP()
+
 }
 
-document.getElementById("answer").disabled = true
-
+document.getElementById("answer").disabled=true
 loadRanking()
