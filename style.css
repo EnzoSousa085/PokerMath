@@ -5,93 +5,66 @@ font-family:Arial;
 text-align:center;
 }
 
-.pokedex{
+.game{
 max-width:500px;
 margin:auto;
 background:#c62828;
 padding:20px;
 border-radius:20px;
-box-shadow:0 0 20px black;
-}
-
-.battle{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.pokemon-area, .player-area{
-width:40%;
 }
 
 img{
 width:120px;
-image-rendering: pixelated;
+image-rendering:pixelated;
 }
 
-.vs{
-font-size:20px;
-font-weight:bold;
-}
-
-.hp-bar{
-background:#444;
+.hp{
+background:#333;
 height:15px;
 border-radius:10px;
-margin-top:5px;
+margin:5px;
 }
 
 #pokemonHP{
 background:lime;
 height:100%;
 width:100%;
-border-radius:10px;
-transition:0.3s;
 }
 
 #playerHP{
 background:cyan;
 height:100%;
 width:100%;
-border-radius:10px;
-transition:0.3s;
-}
-
-.math-box{
-margin-top:20px;
 }
 
 input{
 padding:10px;
-width:100px;
-font-size:18px;
+margin:5px;
 }
 
 button{
 padding:10px;
-margin-top:10px;
-font-size:16px;
+margin:5px;
 border:none;
-border-radius:10px;
+border-radius:8px;
 background:#1976d2;
 color:white;
 }
 
-button:hover{
-background:#0d47a1;
+.timer{
+font-size:20px;
+margin:10px;
 }
 
-.log{
-margin-top:15px;
-min-height:30px;
-}
-
-.score{
+.ranking{
+background:#111;
+padding:10px;
+border-radius:10px;
 margin-top:10px;
-font-size:18px;
 }
 
-.reset{
-background:#2e7d32;
-margin-top:10px;
+.battle{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
